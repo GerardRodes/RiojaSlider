@@ -96,15 +96,15 @@ And then you can call any method from the `slider` var.
 There some methods very usefull to modificiate the slider behavior, and others that are more intended to the core code. Anyways all them are disponible to use.  
 
 **appendSlide**  
-Adds a new slide to the end.
+Adds a new slide to the end.  
 Params: (SlideContent)
   
 **prependSlide**  
-Adds a new slide to the start.
+Adds a new slide to the start.  
 Params: (SlideContent)
   
 **showSlide**  
-Moves to the indicated slide.
+Moves to the indicated slide.  
 Params: ((SlideIndex|SlideObject))
   
 **showNextSlide**
