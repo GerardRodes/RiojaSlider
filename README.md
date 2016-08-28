@@ -9,13 +9,18 @@ There are some options and methods that I'm going to explain below;
 
 **height**  
 Slider height.  
-Default: '100%'  
+Default: DOM parent height  
 Values: `CSS size syntax`  
 
 **width**  
 Slider width.  
-Default: '100%'  
+Default: DOM parent width  
 Values: `CSS size syntax`  
+
+**responsiveHeight**  
+Every Slide has it's own height depending on the content, every transition viewport transforms to fit the slide height.  
+Default: false  
+Values: `Boolean`  
 
 **startSlide**  
 Starting slide.  
