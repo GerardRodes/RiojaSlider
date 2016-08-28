@@ -147,7 +147,7 @@ Params: `Object`
 	name: 'nameOfTheElement',
 	index: `Int`, //If the name is 'slide' it can have an index attribute
 	css: {
-		cssProperty: 'value1',
+		cssProperty1: 'value1',
 		cssProperty2: 'value2'
 	},
 	attributes: {
