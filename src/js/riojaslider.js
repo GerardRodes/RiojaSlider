@@ -19,8 +19,8 @@
 	};
 
 	var defaultOptions = {
-		height: '100%',
-		width: '100%',
+		height: null,
+		width: null,
 		startSlide: 0,
 		slideSpeed: 1000,
 		slideEasing: 'swing',
@@ -33,7 +33,8 @@
 		auto: false,
 		autoPause: 4000,
 		stopAutoOnControl: true,
-		stopAutoTime: 2000
+		stopAutoTime: 2000,
+		responsiveHeight: false
 	}
 
 	$.fn.extend({
@@ -93,8 +94,8 @@
 					css: {
 						overflow:'hidden',
 						position: 'relative',
-						width:options.width,
-						height: options.height
+						width: options.width || mainObj.elements.slider.dom.parent().width(),
+						height: options.height || mainObj.elements.slider.dom.parent().height()
 					},
 					children: [
 						{
@@ -106,6 +107,9 @@
 							},
 							element: this.elements.slider.dom,
 							children: $.makeArray(this.elements.slides.dom.map(function(i,el){
+								if($(el).children().length == 1 && $(el).children().is("img")){
+									var height = $(el).children().height()
+								}
 								return {
 									element: $(el),
 									name: 'slide',
@@ -113,7 +117,8 @@
 									css: {
 										position: 'absolute',
 										top: 0,
-										left: '100%'
+										left: '100%',
+										height: height
 									},
 									attributes: {'data-index':i}
 								}
@@ -189,6 +194,9 @@
 				})
 				mainObj.elements.slides.actual.index = indexToShow;
 				mainObj.elements.slides.actual.element = slideToShow;
+
+				animationOptions.queue = undefined;
+				mainObj.elements.viewport.custom.element.animate({height:slideToShow.element.height()},animationOptions)
 			}
 		}
 
@@ -400,9 +408,6 @@
 			mainObj.elements.slides.total += 1;
 		}
 
-		/*
-			Builds all the extra HTML
-		*/
 		this.buildCustomElement = function(optionalElement){
 
 			var elementToProcess = optionalElement === undefined ? this.customElements : optionalElement,
@@ -443,10 +448,13 @@
 				} else {
 					mainObj.elements.slides.custom.push(elementToProcess)
 				}
+
 				$(elementToProcess.element).css({
-					minWidth: mainObj.elements.viewport.custom.css.width,
-					minHeight: mainObj.elements.viewport.custom.css.heigh
+					width: mainObj.elements.viewport.custom.css.width,
+					height: options.responsiveHeight ? undefined : mainObj.elements.viewport.custom.css.height,
+					overflow: 'hidden'
 				});
+					
 			} else {
 				if(mainObj.elements[elementToProcess.name] === undefined){
 					mainObj.elements[elementToProcess.name] = {}

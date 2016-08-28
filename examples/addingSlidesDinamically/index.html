@@ -31,25 +31,25 @@
 <body>
 	
 	<ul id="slider">
-	  <li><img src="img/slide0.jpg" /></li>
-	  <li><img src="img/slide1.jpg" /></li>
-	  <li><img src="img/slide2.jpg" /></li>
-	  <li><img src="img/slide3.jpg" /></li>
-	  <li><img src="img/slide4.jpg" /></li>
+	  <li><img src="../img/slide0.jpg" /></li>
+	  <li><img src="../img/slide1.jpg" /></li>
+	  <li><img src="../img/slide2.jpg" /></li>
+	  <li><img src="../img/slide3.jpg" /></li>
+	  <li><img src="../img/slide4.jpg" /></li>
 	</ul>
 
 	<div id="extra-slides">
 		<div id="append">
 			<h2>Append</h2>
-			<img src="img/slide-append0.jpg" />
-			<img src="img/slide-append1.jpg" />
-			<img src="img/slide-append2.jpg" />
+			<img src="../img/slide-append0.jpg" />
+			<img src="../img/slide-append1.jpg" />
+			<img src="../img/slide-append2.jpg" />
 		</div>
 		<div id="prepend">
 			<h2>Prepend</h2>
-			<img src="img/slide-prepend0.jpg" />
-			<img src="img/slide-prepend1.jpg" />
-			<img src="img/slide-prepend2.jpg" />
+			<img src="../img/slide-prepend0.jpg" />
+			<img src="../img/slide-prepend1.jpg" />
+			<img src="../img/slide-prepend2.jpg" />
 		</div>
 	</div>
 
@@ -60,11 +60,7 @@
 		$(function(){
 			var slider = $('#slider').riojaSlider({
 				height: '402px',
-				width: '720px',
-				slideSpeed: 500,
-				infiniteLoop: true,
-				auto: false,
-				autoPause: 500
+				width: '720px'
 			})
 
 			$('#append img').on('click',function(){
