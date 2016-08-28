@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Adding Slides Dinamically</title>
+</head>
+<style type="text/css">
+	img {max-width: 100%}
+	#extra-slides img {
+		max-width: 150px;
+		cursor: pointer;
+	}
+	#append,
+	#prepend {
+   	max-width: 500px;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 50px;
+	}
+	.controls .next,
+	.controls .prev {
+		display: inline-block;
+		padding: 7px 12px;
+		margin: 0 5px;
+		border: 1px solid black;
+		cursor: pointer;
+	}
+</style>
+<body>
+	
+	<ul id="slider">
+	  <li><img src="img/slide0.jpg" /></li>
+	  <li><img src="img/slide1.jpg" /></li>
+	  <li><img src="img/slide2.jpg" /></li>
+	  <li><img src="img/slide3.jpg" /></li>
+	  <li><img src="img/slide4.jpg" /></li>
+	</ul>
+
+	<div id="extra-slides">
+		<div id="append">
+			<h2>Append</h2>
+			<img src="img/slide-append0.jpg" />
+			<img src="img/slide-append1.jpg" />
+			<img src="img/slide-append2.jpg" />
+		</div>
+		<div id="prepend">
+			<h2>Prepend</h2>
+			<img src="img/slide-prepend0.jpg" />
+			<img src="img/slide-prepend1.jpg" />
+			<img src="img/slide-prepend2.jpg" />
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../../src/js/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="../../src/js/riojaSlider.js"></script>
+	<script type="text/javascript">
+
+		$(function(){
+			var slider = $('#slider').riojaSlider({
+				height: '402px',
+				width: '720px',
+				slideSpeed: 500,
+				infiniteLoop: true,
+				auto: false,
+				autoPause: 500
+			})
+
+			$('#append img').on('click',function(){
+				slider.appendSlide($(this)[0].outerHTML)
+			})
+
+			$('#prepend img').on('click',function(){
+				slider.prependSlide($(this)[0].outerHTML)
+			})
+
+			$(document).on('keydown',function(e){
+				if(e.keyCode == 80){
+					console.log(slider)
+				}
+			})
+
+		})
+	</script>
+</body>
+</html>
