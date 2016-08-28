@@ -121,17 +121,17 @@ Returns slide object.
 Params: (SlideIndex)
   
 **renderSlide**  
-Renders slide in correct position, actually it's not really needed when running the slides, but it helps when initializing first slide.
+Renders slide in correct position, actually it's not really needed when running the slides, but it helps when initializing first slide.  
 Params: ((SlideIndex|SlideObject))  
   
 **autoSlider**  
 Starts auto slides animation.  
   
 **pauseAuto**  
-Pause auto slides animation.  
+Pause auto slides animation.   
   
 **bindControls**  
-Bind behaviours to PREV NEXT controls.
+Bind behaviours to PREV NEXT controls.  
   
 **buildCustomElement**  
 Create custom object element.  
