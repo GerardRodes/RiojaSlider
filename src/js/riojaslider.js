@@ -32,9 +32,15 @@
 		controls: true,
 		auto: false,
 		autoPause: 4000,
+		cssAnimations: false,
 		stopAutoOnControl: true,
 		stopAutoTime: 2000,
-		responsiveHeight: false
+		responsiveHeight: false,
+		onSliderLoad: function(slider){},
+		onSlideBefore: function(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
+		onSlideAfter: function(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
+		onClickNext: undefined,
+		onClickPrev: undefined
 	}
 
 	$.fn.extend({
@@ -53,11 +59,11 @@
 	});
 
 	var initSlide = function(sliderWrapper,options){
-
 		var slider = new RiojaSlider(sliderWrapper,options);
 
 
 		slider.init()
+		options.onSliderLoad(slider);
 
 		return slider;
 	}
@@ -167,21 +173,21 @@
 					if(options.infiniteLoop){
 						if(control == 'Next'){
 							if(slide.index == indexToShow){
-								slideToShow.element.css({left:viewportWidth})
+								slideToShow.element.css({transition: 'none', left:viewportWidth})
 								position = 0;
 							} else if (slide.index == actualIndex) {
 								position = -viewportWidth;
 							} else {
-								slide.element.css({left:-viewportWidth})
+								slide.element.css({transition: 'none', left:-viewportWidth})
 							}
 						} else if (control == 'Prev'){
 							if(slide.index == indexToShow){
-								slideToShow.element.css({left:-viewportWidth})
+								slideToShow.element.css({transition: 'none', left:-viewportWidth})
 								position = 0;
 							} else if (slide.index == actualIndex) {
 								position = viewportWidth;
 							} else {
-								slide.element.css({left:viewportWidth})
+								slide.element.css({transition: 'none', left:viewportWidth})
 							}
 						}
 					} else {
@@ -189,7 +195,17 @@
 					}
 
 					if (position != undefined){
-						slide.element.animate({left: position},animationOptions)
+						if(options.cssAnimations){
+							console.log((options.slideSpeed / 1000)+'s ease-out')
+							slide.element.css({transition: (options.slideSpeed / 1000)+'s ease-out'})
+							slide.element.css({left: position})
+						} else {
+							slide.element.animate({left: position},animationOptions)
+						}
+
+						// if(options.responsiveHeight){
+						// 	mainObj.elements.viewport.custom.element.animate({'height':slide.element.height()})
+						// }
 					}
 				})
 				mainObj.elements.slides.actual.index = indexToShow;
@@ -213,7 +229,12 @@
 			$.each(mainObj.elements.slides.custom,function(i, slide){
 				mainObj.renderSlide(slide)
 			})
+
 			this.showSlide(options.startSlide);
+
+			if(options.startSlide != 0){
+				this.elements.slides.custom[options.startSlide].element.css({left:0});
+			}
 
 			if(options.controls){
 				this.bindControls();
@@ -255,23 +276,31 @@
 
 		this.bindControls = function(){
 			this.elements.prev.custom.element.on('click',function(){
-				if(options.stopAutoOnControl && options.auto){
-					mainObj.pauseAuto();
-				}
-				if (options.multipleClicks) {
-					mainObj.showPrevSlide()
-				} else if(mainObj.stateReady()){
-					mainObj.showPrevSlide()
+				if(options.onClickPrev == undefined){
+					if(options.stopAutoOnControl && options.auto){
+						mainObj.pauseAuto();
+					}
+					if (options.multipleClicks) {
+						mainObj.showPrevSlide()
+					} else if(mainObj.stateReady()){
+						mainObj.showPrevSlide()
+					}
+				} else {
+					options.onClickPrev(mainObj);
 				}
 			});
 			this.elements.next.custom.element.on('click',function(){
-				if(options.stopAutoOnControl && options.auto){
-					mainObj.pauseAuto();
-				}
-				if (options.multipleClicks) {
-					mainObj.showNextSlide()
-				} else if(mainObj.stateReady()){
-					mainObj.showNextSlide()
+				if(options.onClickNext == undefined){
+					if(options.stopAutoOnControl && options.auto){
+						mainObj.pauseAuto();
+					}
+					if (options.multipleClicks) {
+						mainObj.showNextSlide()
+					} else if(mainObj.stateReady()){
+						mainObj.showNextSlide()
+					}
+				} else {
+					options.onClickNext(mainObj);
 				}
 			});
 		}
@@ -302,7 +331,7 @@
 
 		this.showPrevSlide = function(){
 			var actual = mainObj.elements.slides.actual.index,
-					prevIndex;
+				prevIndex;
 
 			if(options.infiniteLoop){
 				prevIndex = actual > 0 ? actual - 1 : mainObj.elements.slides.total - 1;
@@ -347,7 +376,9 @@
 					viewportWidth = mainObj.elements.viewport.width,
 					actualIndex = mainObj.elements.slides.actual.index;
 
+			options.onSlideAfter(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
 			mainObj.sliderMode[options.sliderMode](slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
+			options.onSlideBefore(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
 
 		}
 
