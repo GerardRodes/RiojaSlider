@@ -61,7 +61,6 @@
 	var initSlide = function(sliderWrapper,options){
 		var slider = new RiojaSlider(sliderWrapper,options);
 
-
 		slider.init()
 		options.onSliderLoad(slider);
 
@@ -221,24 +220,26 @@
 		}
 
 		this.init = function(){
-			this.setStateReady()
-			this.buildCustomElement();
-			this.elements.viewport.width = this.elements.viewport.custom.element.width();
-			this.elements.viewport.height = this.elements.viewport.custom.element.height();
+			mainObj.setStateReady()
+			mainObj.buildCustomElement();
+			mainObj.elements.viewport.width = mainObj.elements.viewport.custom.element.width();
+			mainObj.elements.viewport.height = mainObj.elements.viewport.custom.element.height();
 
-			this.showSlide(options.startSlide);
+			mainObj.elements.slides.actual.index = options.startSlide;
+			mainObj.elements.slides.actual.element = mainObj.getSlide(options.startSlide);
+
 			$.each(mainObj.elements.slides.custom,function(i, slide){
 				mainObj.renderSlide(slide)
 			})
 
 			if(options.controls){
-				this.bindControls();
+				mainObj.bindControls();
 			}
 
 			mainObj.setStateReady();
 
 			if(options.auto){
-				this.autoSlider();
+				mainObj.autoSlider();
 			}
 		};
 
@@ -358,9 +359,8 @@
 
 		this.renderSlide = function(slideToRender){
 			var index = typeof slideToRender == 'number' ? slideToRender : slideToRender.index,
-					slide = typeof slideToRender == 'number' ? mainObj.getSlide(slideToRender) : slideToRender;
-
-			slide.element.css({left:mainObj.elements.viewport.width * index})
+				slide = typeof slideToRender == 'number' ? mainObj.getSlide(slideToRender) : slideToRender;
+			slide.element.css({left:mainObj.elements.viewport.width * (index - options.startSlide)})
 		}
 
 		this.showSlide = function(slideToShow,control){
