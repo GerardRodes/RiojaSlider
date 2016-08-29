@@ -226,15 +226,10 @@
 			this.elements.viewport.width = this.elements.viewport.custom.element.width();
 			this.elements.viewport.height = this.elements.viewport.custom.element.height();
 
+			this.showSlide(options.startSlide);
 			$.each(mainObj.elements.slides.custom,function(i, slide){
 				mainObj.renderSlide(slide)
 			})
-
-			this.showSlide(options.startSlide);
-
-			if(options.startSlide != 0){
-				this.elements.slides.custom[options.startSlide].element.css({left:0});
-			}
 
 			if(options.controls){
 				this.bindControls();
