@@ -37,8 +37,8 @@
 		stopAutoTime: 2000,
 		responsiveHeight: false,
 		onSliderLoad: function(slider){},
-		onSlideBefore: function(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
-		onSlideAfter: function(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
+		onSlideBefore: function(slider,slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
+		onSlideAfter: function(slider,slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength){},
 		onClickNext: undefined,
 		onClickPrev: undefined
 	}
@@ -211,7 +211,9 @@
 				mainObj.elements.slides.actual.element = slideToShow;
 
 				animationOptions.queue = undefined;
-				mainObj.elements.viewport.custom.element.animate({height:slideToShow.element.height()},animationOptions)
+				if(options.responsiveHeight){
+					mainObj.elements.viewport.custom.element.animate({height:slideToShow.element.height()},animationOptions)
+				}
 			}
 		}
 
@@ -371,9 +373,9 @@
 					viewportWidth = mainObj.elements.viewport.width,
 					actualIndex = mainObj.elements.slides.actual.index;
 
-			options.onSlideAfter(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
+			options.onSlideBefore(mainObj,slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
 			mainObj.sliderMode[options.sliderMode](slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
-			options.onSlideBefore(slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
+			options.onSlideAfter(mainObj,slide,slides,viewportWidth,indexToShow,actualIndex,control,slidesLength);
 
 		}
 
