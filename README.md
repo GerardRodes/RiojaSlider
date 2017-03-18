@@ -35,7 +35,7 @@ Values: `Int`
 **slideEasing**  
 Animation easing for slide transition in ms.  
 Default: 'swing'  
-Values: `Int`  
+Values: `String`  
 
 **prevContent**  
 HTML content of `PREV` control.  
