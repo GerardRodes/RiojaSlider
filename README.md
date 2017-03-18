@@ -40,12 +40,12 @@ Values: `String`
 **prevContent**  
 HTML content of `PREV` control.  
 Default: 'Prev'  
-Values: `HTML`  
+Values: `String`  
 
 **nextContent**  
 HTML content of `NEXT` control.  
 Default: 'Next'  
-Values: `HTML`  
+Values: `String`  
 
 **infiniteLoop**  
 When slider arrives to last/first slide and request for next/prev slide returns first/last slide.  
@@ -88,7 +88,7 @@ Default: 200
 Values: `Int`  
 
 
-##Methods
+## Methods  
 To use a method you just have to initilizate the Slider into a varible like that:
 ```javascript
 	var slider = $('#slider').riojaSlider({
@@ -127,7 +127,7 @@ Params: (SlideIndex)
   
 **renderSlide**  
 Renders slide in correct position, actually it's not really needed when running the slides, but it helps when initializing first slide.  
-Params: ((SlideIndex|SlideObject))  
+Params: ( SlideIndex || SlideObject )  
   
 **autoSlider**  
 Starts auto slides animation.  
