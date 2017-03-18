@@ -1,11 +1,11 @@
 # RiojaSlider v0.1
 **jQuery Plugin Slider**
 
-##Context
+##Context  
 Coded to fulfill my need of obtaining a plugin slider which doesn't need to reload everything everytime i need to add a new slide dynamically (for AJAX purpose principally).
 There are some options and methods that I'm going to explain below;
 
-##Options
+##Options  
 
 **height**  
 Slider height.  
